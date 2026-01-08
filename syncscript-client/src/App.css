@@ -1,0 +1,146 @@
+/* App.css */
+:root {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #252526;
+  --text-color: #ffffff;
+  --border-color: #333333;
+}
+
+.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f3f3;
+  --text-color: #000000;
+  --border-color: #cccccc;
+}
+
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* Stacks Navbar on top of Content */
+  background: var(--bg-primary);
+  color: var(--text-color);
+  transition: background 0.3s ease;
+  overflow:hidden;
+}
+
+
+.main-content {
+  display: flex;
+  flex-direction: row; /* Sidebar left, Editor right */
+  flex: 1; /* Takes up all remaining space below Navbar */
+  overflow: hidden;
+}
+
+/* Container for Editor + Terminal 
+.editor-terminal-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+
+.terminal-container {
+  height: 300px; 
+  background: #1e1e1e;
+  border-top: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-header {
+  background: var(--bg-secondary);
+  padding: 5px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #858585;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-header button {
+  background: none;
+  border: none;
+  color: #858585;
+  font-size: 20px;
+}
+
+.terminal-body {
+  flex: 1;
+  padding: 10px;
+  overflow: hidden;
+}*/
+
+.navbar {
+  padding: 10px;
+  background: var(--bg-secondary);
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  }
+
+/* Sidebar Title */
+.sidebar-title {
+  font-size: 11px;
+  color: #858585;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  
+}
+
+/* THE FIX: Horizontal Alignment */
+.user-badge {
+  display: flex;         /* Enables flexbox */
+  flex-direction: row;   /* Ensures horizontal alignment */
+  align-items: center;   /* Vertically centers dot and text */
+  gap: 10px;             /* Space between dot and name */
+  margin-bottom: 12px;
+  padding: 4px 0;
+}
+
+/* The Color Dot */
+.user-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;        /* Prevents dot from squishing */
+}
+
+/* The Name Text */
+.user-name {
+  font-size: 14px;
+  color: var(--text-color);
+  white-space: nowrap;   /* Prevents name from wrapping to next line */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds ... if name is too long */
+}
+
+/* Sidebar Layout adjustment */
+.sidebar {
+  width: 80px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 15px;
+  height: 100%;
+}
+
+.online-users-section {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.download-section {
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+  margin-bottom: 40px;
+}
