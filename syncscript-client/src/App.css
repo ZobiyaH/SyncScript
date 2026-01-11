@@ -16,27 +16,31 @@
 .app-container {
   height: 100vh;
   display: flex;
-  flex-direction: column; /* Stacks Navbar on top of Content */
+  flex-direction: column;
   background: var(--bg-primary);
   color: var(--text-color);
   transition: background 0.3s ease;
-  overflow:hidden;
-}
-
-
-.main-content {
-  display: flex;
-  flex-direction: row; /* Sidebar left, Editor right */
-  flex: 1; /* Takes up all remaining space below Navbar */
   overflow: hidden;
 }
 
-/* Container for Editor + Terminal 
+.main-content {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+  
+}
+
+.nav-btn.run-btn { background: #2ea44f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+
+
+/* Container for Editor + Terminal */
 .editor-terminal-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 .editor-wrapper {
@@ -44,13 +48,16 @@
   position: relative;
 }
 
-
+/* --- TERMINAL FIXES --- */
 .terminal-container {
-  height: 300px; 
-  background: #1e1e1e;
-  border-top: 2px solid var(--border-color);
+  height: 50% !important; /* Forces physical space */
+  width: 100%;
+  background-color: #000000;
+  border-top: 2px solid #0e639c;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 100;
 }
 
 .terminal-header {
@@ -62,6 +69,7 @@
   font-size: 12px;
   color: #858585;
   border-bottom: 1px solid var(--border-color);
+  user-select: none;
 }
 
 .terminal-header button {
@@ -69,78 +77,128 @@
   border: none;
   color: #858585;
   font-size: 20px;
+  cursor: pointer;
+}
+
+.terminal-header button:hover {
+  color: #fff;
 }
 
 .terminal-body {
   flex: 1;
-  padding: 10px;
+  width: 100%;
+  height: 100%; /* Critical: allows Xterm to fill the box */
+  padding: 5px;
   overflow: hidden;
-}*/
+  background-color: #000000; /* Match terminal theme */
+}
 
-.navbar {
+/* Ensure Xterm.js internal elements are visible */
+.xterm {
   padding: 10px;
+  height: 100%;
+}
+
+.xterm-viewport {
+  background-color: #000000 !important; /* Ensure viewport isn't transparent or miscolored */
+}
+
+/* Navbar */
+.navbar {
+  height: 50px;
+  padding: 0 15px;
   background: var(--bg-secondary);
   display: flex;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
-  }
+}
 
-/* Sidebar Title */
+
+/* Sidebar Layout */
+.sidebar {
+  width: 80px; /* Increased from 80px for better text visibility */
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  
+  padding: 20px 15px;
+  height: 100%;
+}
+
+
+/* --- SIDEBAR & USER BADGE FIXES --- */
 .sidebar-title {
   font-size: 11px;
   color: #858585;
   font-weight: bold;
   margin-bottom: 15px;
   text-transform: uppercase;
-  
 }
 
-/* THE FIX: Horizontal Alignment */
+.sidebar-actions {
+  margin-top: 20px; /* This controls the gap between the last user and buttons */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .user-badge {
-  display: flex;         /* Enables flexbox */
-  flex-direction: row;   /* Ensures horizontal alignment */
-  align-items: center;   /* Vertically centers dot and text */
-  gap: 10px;             /* Space between dot and name */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 12px;
   padding: 4px 0;
 }
 
-/* The Color Dot */
 .user-dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  flex-shrink: 0;        /* Prevents dot from squishing */
+  flex-shrink: 0;
 }
 
-/* The Name Text */
 .user-name {
   font-size: 14px;
   color: var(--text-color);
-  white-space: nowrap;   /* Prevents name from wrapping to next line */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Adds ... if name is too long */
-}
-
-/* Sidebar Layout adjustment */
-.sidebar {
-  width: 80px;
-  background: var(--bg-secondary);
-  border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 15px;
-  height: 100%;
+  text-overflow: ellipsis;
 }
 
 .online-users-section {
   flex: 1;
   overflow-y: auto;
+  max-height: 70vh;
+  margin-bottom: 10px;
 }
 
+
+.sidebar-btn.upload-label {
+  display: block;
+  background: #e7a32f;
+  color: rgb(17, 17, 17);
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.sidebar-btn.upload-label:hover { background: #4c4c4c; }
+
 .download-section {
+  display: block;
   padding-top: 15px;
   border-top: 1px solid var(--border-color);
-  margin-bottom: 40px;
+  margin-bottom: 80px;
+  flex:1;
+  background: #e7a32f;
+  color: rgb(17, 17, 17);
+  text-align: center;
+  padding: 8px;
+  
 }

@@ -1,5 +1,5 @@
 // components/Sidebar.jsx
-export default function Sidebar({ onlineUsers, downloadCode }) {
+export default function Sidebar({ onlineUsers, handleFileUpload, handleDownload }) {
   return (
     <div className="sidebar">
       {/* Top Section: Users */}
@@ -32,22 +32,24 @@ export default function Sidebar({ onlineUsers, downloadCode }) {
         ))}
       </div>
 
-      {/* Bottom Section: Download */}
-      <div className="download-section">
-        <button
-          onClick={downloadCode}
-          style={{
-            width: "100%",
-            background: "#28a745",
-            color: "#fff",
-            border: "none",
-            padding: "10px",
-            cursor: "pointer",
-            borderRadius: "4px",
-            fontWeight: "bold",
-          }}
-        >
-          📥 Download File
+      <div className="actions-section">
+        {/* Upload Button */}
+        <div className="upload-wrapper">
+          <label htmlFor="file-upload" className="sidebar-btn upload-label">
+            Upload File
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            accept=".js,.py,.txt,.cpp,.c,.html,.css,.java"
+            onChange={handleFileUpload}
+            style={{ display: "none" }}
+          />
+        </div>
+
+        {/* Download Button */}
+        <button onClick={handleDownload} className="sidebar-btn download-btn">
+          Download File
         </button>
       </div>
     </div>

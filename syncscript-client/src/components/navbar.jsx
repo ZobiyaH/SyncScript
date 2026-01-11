@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Navbar({
+  onRun,
   language,
   handleLanguageChange,
   copyInviteLink,
@@ -13,7 +14,23 @@ export default function Navbar({
   return (
     <div className="navbar">
       <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
-        <b style={{ color: "var(--text-color)" }}>🚀 SyncScript</b>
+        <a
+          href="/"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+          }}
+        >
+          <img
+            src="/logo1.png"
+            alt="SyncScript Logo"
+            style={{ height: "40px", marginRight: "10px" }}
+          />
+          <b style={{ color: "var(--text-color)", fontSize: "1.2rem" }}>
+            SyncScript
+          </b>
+        </a>
 
         {/* Language Selector */}
         <select
@@ -33,7 +50,12 @@ export default function Navbar({
           <option value="c">C</option>
           <option value="cpp">C++</option>
           <option value="html">HTML</option>
+          <option value="css">CSS</option>
         </select>
+
+        <button onClick={onRun} className="nav-btn run-btn">
+          Run Program
+        </button>
 
         {/* Copy Invite Button */}
         <button
@@ -50,7 +72,22 @@ export default function Navbar({
           Copy Link
         </button>
 
-        
+        {/* --- NEW: Terminal Toggle Button --- */}
+        <button
+          onClick={toggleTerminal}
+          style={{
+            background: showTerminal ? "#444" : "#6a1b9a", // Grey when open, Purple when closed
+            color: "#fff",
+            border: "none",
+            padding: "4px 10px",
+            cursor: "pointer",
+            borderRadius: "4px",
+            fontWeight: "500",
+            transition: "background 0.2s",
+          }}
+        >
+          {showTerminal ? "Hide Terminal" : "Terminal"}
+        </button>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
