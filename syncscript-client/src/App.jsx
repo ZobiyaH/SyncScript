@@ -70,7 +70,7 @@ function EditorLayout({ displayName }) {
 
     // Safety check to prevent the 'send' error
     if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
-      alert("Terminal is not connected. Please check your backend server.");
+      alert("Loading backend server,Please click run button again.");
       return;
     }
 
@@ -78,7 +78,7 @@ function EditorLayout({ displayName }) {
 
     // 1. Connection Safety Check
     if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
-      alert("Loading backend server.");
+      alert("Loading backend server. Please click run button again");
       return;
     }
 
