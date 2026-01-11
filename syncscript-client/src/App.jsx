@@ -233,10 +233,9 @@ function EditorLayout({ displayName }) {
   function handleEditorDidMount(editor) {
     editorRef.current = editor;
     const doc = new Y.Doc();
-    const serverUrl =
-      window.location.hostname === "localhost"
-        ? "ws://localhost:1234"
-        : "wss://your-yjs-server.herokuapp.com";
+    const serverUrl = import.meta.env.VITE_BACKEND_URL
+      ? import.meta.env.VITE_BACKEND_URL.replace("/terminal", "")
+      : "ws://localhost:1234";
 
     const provider = new WebsocketProvider(serverUrl, roomID, doc);
     providerRef.current = provider;
