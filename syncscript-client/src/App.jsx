@@ -22,6 +22,10 @@ const WORD_COLORS = [
   "#f49f0dff",
 ];
 
+loader.config({
+  paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs" },
+}); 
+
 function App() {
   const [userName, setUserName] = useState(
     localStorage.getItem("syncscript-nickname")
