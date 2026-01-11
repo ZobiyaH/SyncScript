@@ -76,4 +76,4 @@ setInterval(() => {
     .on("error", (err) => {
       console.error("Self-ping error:", err.message);
     });
-}, 7 * 60 * 1000); // 7 minutes
+}, 14 * 60 * 1000); // 14 minutes
