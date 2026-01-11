@@ -49,8 +49,8 @@ wss.on("connection", (conn, req) => {
       console.log("Terminal session closed. Cleaning up...");
       const cleanup =
         os.platform() === "win32"
-          ? "del temp.c, temp.cpp, out.exe, Main.java, Main.class"
-          : "rm -f temp.c temp.cpp out Main.java Main.class";
+          ? "del temp.c, temp.cpp,*.java, *.class, out.exe"
+          : "rm -f temp.c temp.cpp *.java *.class out";
       ptyProcess.write(`${cleanup}\r`);
       ptyProcess.kill();
     });

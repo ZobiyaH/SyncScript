@@ -94,6 +94,10 @@ function EditorLayout({ displayName }) {
     // (if deploying to Render/Docker):
     const isWindows = false;
 
+    // Regex to find the public class name
+    const classMatch = code.match(/public\s+class\s+(\w+)/);
+    const className = classMatch ? classMatch[1] : "Main"; // Default to Main if not found
+
     // 2. Define commands for each language
     const commands = isWindows
       ? {
@@ -106,7 +110,10 @@ function EditorLayout({ displayName }) {
             .replace(/\n/g, "; ")}"`,
           c: `Set-Content temp.c -Value @'\n${code}\n'@; gcc temp.c -o out.exe; if ($?) { .\\out.exe }`,
           cpp: `Set-Content temp.cpp -Value @'\n${code}\n'@; g++ temp.cpp -o out.exe; if ($?) { .\\out.exe }`,
-          java: `Set-Content Main.java -Value @'\n${code}\n'@; javac Main.java; if ($?) { java Main }`,
+          java: `echo '${code.replace(
+            /'/g,
+            "'\\''"
+          )}' > ${className}.java && javac ${className}.java && java ${className}`,
         }
       : {
           // BASH/LINUX SYNTAX
@@ -125,7 +132,7 @@ function EditorLayout({ displayName }) {
           java: `echo '${code.replace(
             /'/g,
             "'\\''"
-          )}' > Main.java && javac Main.java && java Main`,
+          )}' > ${className}.java && javac ${className}.java && java ${className}`,
         };
 
     if (language === "html" || language === "css") {
