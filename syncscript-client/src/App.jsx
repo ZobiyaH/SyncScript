@@ -72,6 +72,12 @@ function EditorLayout({ displayName }) {
 
     const code = editorRef.current.getValue();
 
+    // 1. Connection Safety Check
+    if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
+      alert("Terminal is not connected. Please check your backend server.");
+      return;
+    }
+
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       // 1. Clear terminal screen
       socketRef.current.send("\x0c");
@@ -79,7 +85,10 @@ function EditorLayout({ displayName }) {
 
     // 1. Detect Environment (This assumes your backend tells the frontend or you know your host)
     // For local dev on Windows, we assume PowerShell.
-    const isWindows = /Win/.test(navigator.userAgent);
+    //const isWindows = /Win/.test(navigator.userAgent);
+
+    // (if deploying to Render/Docker):
+    const isWindows = false;
 
     // 2. Define commands for each language
     const commands = isWindows
@@ -88,7 +97,9 @@ function EditorLayout({ displayName }) {
           javascript: `node -e "${code
             .replace(/"/g, '\\"')
             .replace(/\n/g, " ")}"`,
-          python: `python -c "${code.replace(/"/g, '`"').replace(/\n/g, '; ')}"`,
+          python: `python -c "${code
+            .replace(/"/g, '`"')
+            .replace(/\n/g, "; ")}"`,
           c: `Set-Content temp.c -Value @'\n${code}\n'@; gcc temp.c -o out.exe; if ($?) { .\\out.exe }`,
           cpp: `Set-Content temp.cpp -Value @'\n${code}\n'@; g++ temp.cpp -o out.exe; if ($?) { .\\out.exe }`,
           java: `Set-Content Main.java -Value @'\n${code}\n'@; javac Main.java; if ($?) { java Main }`,
@@ -98,9 +109,7 @@ function EditorLayout({ displayName }) {
           javascript: `node -e "${code
             .replace(/"/g, '\\"')
             .replace(/\n/g, " ")}"`,
-          python: `python3 -c "${code
-            .replace(/"/g, '\\"')
-            .replace(/\n/g, " ")}"`,
+          python: `python3 -c '${code.replace(/'/g, "'\\''")}'`,
           c: `echo '${code.replace(
             /'/g,
             "'\\''"
@@ -182,12 +191,10 @@ function EditorLayout({ displayName }) {
           // Test message to see if rendering works
           term.write("\x1b[1;32m[SyncScript]\x1b[0m Terminal UI Loaded...\r\n");
 
-          const wsUrl =
-            window.location.hostname === "localhost"
-              ? "ws://localhost:1234/terminal"
-              : "wss://your-backend.onrender.com/terminal";
+          const socketURL =
+            import.meta.env.VITE_BACKEND_URL || "ws://localhost:1234/terminal";
 
-          const socket = new WebSocket(wsUrl);
+          const socket = new WebSocket(socketURL);
           socketRef.current = socket;
 
           socket.onopen = () => {
